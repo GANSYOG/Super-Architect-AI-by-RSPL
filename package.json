@@ -1,0 +1,39 @@
+{
+  "name": "superarchitect-ai",
+  "version": "1.0.0",
+  "description": "Professional Architectural Design Platform",
+  "main": "app.js",
+  "scripts": {
+    "start": "http-server .",
+    "test": "jest",
+    "build": "mkdir -p dist && terser app.js -o dist/app.js -c -m && css-minify -f style.css -o dist/",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "http-server": "^14.1.1",
+    "terser": "^5.24.0",
+    "css-minify": "^2.0.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4"
+  },
+  "eslintConfig": {
+    "globals": {
+      "Chart": "readonly"
+    },
+    "env": {
+      "browser": true,
+      "es2021": true,
+      "jest": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    }
+  }
+}

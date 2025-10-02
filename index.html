@@ -1,218 +1,251 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SuperArchitect AI - Professional Architectural Design Platform</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      SuperArchitect AI - Professional Architectural Design Platform
+    </title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="app" class="app-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <!-- Navigation Section -->
-            <div class="sidebar-section">
-                <div class="logo">
-                    <i class="fas fa-building"></i>
-                    <span>SuperArchitect AI</span>
-                </div>
-                
-                <nav class="navigation">
-                    <button class="nav-item active" data-studio="architecture">
-                        <i class="fas fa-home"></i>
-                        <span>Architecture Studio</span>
-                    </button>
-                    <button class="nav-item" data-studio="interior">
-                        <i class="fas fa-couch"></i>
-                        <span>Interior Revamp</span>
-                    </button>
-                    <button class="nav-item" data-studio="inspiration">
-                        <i class="fas fa-lightbulb"></i>
-                        <span>Inspiration Hub</span>
-                    </button>
-                    <button class="nav-item" data-studio="superhuman">
-                        <i class="fas fa-magic"></i>
-                        <span>Superhuman Designer</span>
-                    </button>
-                    <button class="nav-item" data-studio="agent">
-                        <i class="fas fa-users"></i>
-                        <span>Agent Team Designer</span>
-                    </button>
-                </nav>
-            </div>
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <!-- Navigation Section -->
+        <div class="sidebar-section">
+          <div class="logo">
+            <i class="fas fa-building"></i>
+            <span>SuperArchitect AI</span>
+          </div>
 
-            <!-- Contextual Panel -->
-            <div class="sidebar-section contextual-panel">
-                <div id="contextual-content">
-                    <!-- Dynamic content based on selected studio -->
-                </div>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <div id="studio-content">
-                <!-- Dynamic studio content -->
-            </div>
-        </main>
-
-        <!-- Floating AI Assistant -->
-        <div class="ai-assistant-float">
-            <button id="ai-assistant-btn" class="ai-assistant-btn">
-                <i class="fas fa-robot"></i>
+          <nav class="navigation">
+            <button class="nav-item active" data-studio="architecture">
+              <i class="fas fa-home"></i>
+              <span>Architecture Studio</span>
             </button>
+            <button class="nav-item" data-studio="interior">
+              <i class="fas fa-couch"></i>
+              <span>Interior Revamp</span>
+            </button>
+            <button class="nav-item" data-studio="inspiration">
+              <i class="fas fa-lightbulb"></i>
+              <span>Inspiration Hub</span>
+            </button>
+            <button class="nav-item" data-studio="superhuman">
+              <i class="fas fa-magic"></i>
+              <span>Superhuman Designer</span>
+            </button>
+            <button class="nav-item" data-studio="agent">
+              <i class="fas fa-users"></i>
+              <span>Agent Team Designer</span>
+            </button>
+          </nav>
         </div>
+
+        <!-- Contextual Panel -->
+        <div class="sidebar-section contextual-panel">
+          <div id="contextual-content">
+            <!-- Dynamic content based on selected studio -->
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div id="studio-content">
+          <!-- Dynamic studio content -->
+        </div>
+      </main>
+
+      <!-- Floating AI Assistant -->
+      <div class="ai-assistant-float">
+        <button id="ai-assistant-btn" class="ai-assistant-btn">
+          <i class="fas fa-robot"></i>
+        </button>
+      </div>
     </div>
 
     <!-- AI Assistant Modal -->
     <div id="ai-assistant-modal" class="modal hidden">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content ai-chat-modal">
-            <div class="modal-header">
-                <h3>AI Project Assistant</h3>
-                <button class="modal-close" data-modal="ai-assistant-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="chat-container">
-                <div id="chat-messages" class="chat-messages">
-                    <div class="message ai-message">
-                        <div class="message-avatar">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="message-content">
-                            <p>Hello! I'm your AI Project Assistant. I can help you with architectural design questions, material properties, style guidance, and platform features. How can I assist you today?</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="chat-input-container">
-                    <input type="text" id="chat-input" placeholder="Ask me about design, materials, or how to use SuperArchitect AI..." class="form-control">
-                    <button id="send-message" class="btn btn--primary">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
+      <div class="modal-backdrop"></div>
+      <div class="modal-content ai-chat-modal">
+        <div class="modal-header">
+          <h3>AI Project Assistant</h3>
+          <button class="modal-close" data-modal="ai-assistant-modal">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
+        <div class="chat-container">
+          <div id="chat-messages" class="chat-messages">
+            <div class="message ai-message">
+              <div class="message-avatar">
+                <i class="fas fa-robot"></i>
+              </div>
+              <div class="message-content">
+                <p>
+                  Hello! I'm your AI Project Assistant. I can help you with
+                  architectural design questions, material properties, style
+                  guidance, and platform features. How can I assist you today?
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="chat-input-container">
+            <input
+              type="text"
+              id="chat-input"
+              placeholder="Ask me about design, materials, or how to use SuperArchitect AI..."
+              class="form-control"
+            />
+            <button id="send-message" class="btn btn--primary">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Design Viewer Modal -->
     <div id="design-viewer-modal" class="modal hidden">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content design-viewer-modal">
-            <div class="modal-header">
-                <h3 id="design-title">Design Viewer</h3>
-                <button class="modal-close" data-modal="design-viewer-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="design-viewer-container">
-                <div class="design-viewer-sidebar">
-                    <nav class="viewer-nav">
-                        <button class="viewer-nav-item active" data-tab="images">
-                            <i class="fas fa-images"></i>
-                            <span>Renderings</span>
-                        </button>
-                        <button class="viewer-nav-item" data-tab="plans">
-                            <i class="fas fa-drafting-compass"></i>
-                            <span>2D Plans</span>
-                        </button>
-                        <button class="viewer-nav-item" data-tab="finishes">
-                            <i class="fas fa-palette"></i>
-                            <span>Finishes</span>
-                        </button>
-                        <button class="viewer-nav-item" data-tab="costs">
-                            <i class="fas fa-calculator"></i>
-                            <span>Cost Analysis</span>
-                        </button>
-                        <button class="viewer-nav-item" data-tab="sustainability">
-                            <i class="fas fa-leaf"></i>
-                            <span>Sustainability</span>
-                        </button>
-                    </nav>
-                </div>
-                <div class="design-viewer-content">
-                    <div id="viewer-content">
-                        <!-- Dynamic content based on selected tab -->
-                    </div>
-                </div>
-            </div>
+      <div class="modal-backdrop"></div>
+      <div class="modal-content design-viewer-modal">
+        <div class="modal-header">
+          <h3 id="design-title">Design Viewer</h3>
+          <button class="modal-close" data-modal="design-viewer-modal">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
+        <div class="design-viewer-container">
+          <div class="design-viewer-sidebar">
+            <nav class="viewer-nav">
+              <button class="viewer-nav-item active" data-tab="images">
+                <i class="fas fa-images"></i>
+                <span>Renderings</span>
+              </button>
+              <button class="viewer-nav-item" data-tab="plans">
+                <i class="fas fa-drafting-compass"></i>
+                <span>2D Plans</span>
+              </button>
+              <button class="viewer-nav-item" data-tab="finishes">
+                <i class="fas fa-palette"></i>
+                <span>Finishes</span>
+              </button>
+              <button class="viewer-nav-item" data-tab="costs">
+                <i class="fas fa-calculator"></i>
+                <span>Cost Analysis</span>
+              </button>
+              <button class="viewer-nav-item" data-tab="sustainability">
+                <i class="fas fa-leaf"></i>
+                <span>Sustainability</span>
+              </button>
+            </nav>
+          </div>
+          <div class="design-viewer-content">
+            <div id="viewer-content">
+              <!-- Dynamic content based on selected tab -->
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Agent Huddle Modal -->
     <div id="agent-huddle-modal" class="modal hidden">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content agent-huddle-modal">
-            <div class="modal-header">
-                <h3>AI Command Center</h3>
-                <div class="generation-status">
-                    <span id="status-text">Initializing AI Team...</span>
-                </div>
-            </div>
-            <div class="agent-huddle-container">
-                <div class="agents-circle">
-                    <div id="agents-visualization">
-                        <!-- Agent pods will be generated dynamically -->
-                    </div>
-                    <div class="center-status">
-                        <div class="progress-ring">
-                            <svg class="progress-ring-svg" width="120" height="120">
-                                <circle class="progress-ring-circle-bg" cx="60" cy="60" r="54"></circle>
-                                <circle class="progress-ring-circle" cx="60" cy="60" r="54"></circle>
-                            </svg>
-                            <div class="progress-text">
-                                <span id="progress-percentage">0%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="current-task">
-                    <h4>Current Activity</h4>
-                    <p id="current-task-text">Preparing AI agents...</p>
-                </div>
-            </div>
+      <div class="modal-backdrop"></div>
+      <div class="modal-content agent-huddle-modal">
+        <div class="modal-header">
+          <h3>AI Command Center</h3>
+          <div class="generation-status">
+            <span id="status-text">Initializing AI Team...</span>
+          </div>
         </div>
+        <div class="agent-huddle-container">
+          <div class="agents-circle">
+            <div id="agents-visualization">
+              <!-- Agent pods will be generated dynamically -->
+            </div>
+            <div class="center-status">
+              <div class="progress-ring">
+                <svg class="progress-ring-svg" width="120" height="120">
+                  <circle
+                    class="progress-ring-circle-bg"
+                    cx="60"
+                    cy="60"
+                    r="54"
+                  ></circle>
+                  <circle
+                    class="progress-ring-circle"
+                    cx="60"
+                    cy="60"
+                    r="54"
+                  ></circle>
+                </svg>
+                <div class="progress-text">
+                  <span id="progress-percentage">0%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="current-task">
+            <h4>Current Activity</h4>
+            <p id="current-task-text">Preparing AI agents...</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Image Edit Modal -->
     <div id="image-edit-modal" class="modal hidden">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content image-edit-modal">
-            <div class="modal-header">
-                <h3>Edit This View</h3>
-                <button class="modal-close" data-modal="image-edit-modal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="image-edit-container">
-                <div class="original-image">
-                    <img id="edit-original-image" src="" alt="Original">
-                </div>
-                <div class="edit-controls">
-                    <div class="form-group">
-                        <label class="form-label">Describe your changes:</label>
-                        <textarea id="edit-prompt" class="form-control" rows="3" placeholder="e.g., change the season to winter, add a sports car in the driveway, make it nighttime with warm lighting..."></textarea>
-                    </div>
-                    <button id="apply-edit" class="btn btn--primary btn--full-width">
-                        <i class="fas fa-magic"></i>
-                        Apply Changes
-                    </button>
-                </div>
-                <div id="edited-result" class="edited-result hidden">
-                    <h4>Updated View</h4>
-                    <img id="edited-image" src="" alt="Edited">
-                    <div class="edit-actions">
-                        <button id="accept-edit" class="btn btn--primary">Accept Changes</button>
-                        <button id="try-again" class="btn btn--secondary">Try Again</button>
-                    </div>
-                </div>
-            </div>
+      <div class="modal-backdrop"></div>
+      <div class="modal-content image-edit-modal">
+        <div class="modal-header">
+          <h3>Edit This View</h3>
+          <button class="modal-close" data-modal="image-edit-modal">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
+        <div class="image-edit-container">
+          <div class="original-image">
+            <img id="edit-original-image" src="" alt="Original" />
+          </div>
+          <div class="edit-controls">
+            <div class="form-group">
+              <label class="form-label">Describe your changes:</label>
+              <textarea
+                id="edit-prompt"
+                class="form-control"
+                rows="3"
+                placeholder="e.g., change the season to winter, add a sports car in the driveway, make it nighttime with warm lighting..."
+              ></textarea>
+            </div>
+            <button id="apply-edit" class="btn btn--primary btn--full-width">
+              <i class="fas fa-magic"></i>
+              Apply Changes
+            </button>
+          </div>
+          <div id="edited-result" class="edited-result hidden">
+            <h4>Updated View</h4>
+            <img id="edited-image" src="" alt="Edited" />
+            <div class="edit-actions">
+              <button id="accept-edit" class="btn btn--primary">
+                Accept Changes
+              </button>
+              <button id="try-again" class="btn btn--secondary">
+                Try Again
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="env.js"></script>
     <script src="app.js"></script>
-</body>
+  </body>
 </html>
