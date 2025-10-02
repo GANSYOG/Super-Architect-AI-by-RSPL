@@ -609,60 +609,91 @@ function collectFormData() {
     appState.projectForm = formData;
 }
 
-function startGeneration() {
+async function startGeneration() {
     appState.isGenerating = true;
     openModal('agent-huddle-modal');
-    simulateGeneration();
-}
 
-function simulateGeneration() {
-    const agents = [...appData.aiAgents];
-    let currentAgentIndex = 0;
-    let progress = 0;
-    
-    renderAgentHuddle(agents, currentAgentIndex, progress);
-    
-    const tasks = [
-        { agent: 0, task: "Analyzing project requirements...", duration: 2000 },
-        { agent: 1, task: "Creating architectural concepts...", duration: 3000 },
-        { agent: 2, task: "Synthesizing exterior renderings...", duration: 4000 },
-        { agent: 2, task: "Generating interior visualizations...", duration: 3500 },
-        { agent: 3, task: "Drafting floor plans...", duration: 2500 },
-        { agent: 4, task: "Specifying materials and finishes...", duration: 2800 },
-        { agent: 5, task: "Calculating project costs...", duration: 2200 },
-        { agent: 6, task: "Evaluating sustainability metrics...", duration: 2000 },
-        { agent: 7, task: "Designing interior layouts...", duration: 3200 },
-        { agent: 0, task: "Finalizing project package...", duration: 1500 }
-    ];
-    
-    let taskIndex = 0;
-    
-    function executeNextTask() {
-        if (taskIndex >= tasks.length) {
-            completeGeneration();
-            return;
-        }
-        
-        const task = tasks[taskIndex];
-        currentAgentIndex = task.agent;
-        progress = Math.round(((taskIndex + 1) / tasks.length) * 100);
-        
-        // Update agent status
-        agents.forEach((agent, index) => {
-            agent.status = index === currentAgentIndex ? 'active' : 'idle';
-            agent.currentTask = index === currentAgentIndex ? task.task : 
-                               index < currentAgentIndex ? 'Completed' : 'Waiting...';
-        });
-        
-        renderAgentHuddle(agents, currentAgentIndex, progress, task.task);
-        
-        setTimeout(() => {
-            taskIndex++;
-            executeNextTask();
-        }, task.duration);
+    const apiKey = window.env.GOOGLE_GEMINI_API_KEY;
+    if (!apiKey || apiKey === "YOUR_API_KEY_HERE") {
+        showToast("API key not configured. Please set it in env.js", "error");
+        closeModal('agent-huddle-modal');
+        appState.isGenerating = false;
+        return;
     }
-    
-    executeNextTask();
+
+    const agents = [...appData.aiAgents];
+    const projectBrief = JSON.stringify(appState.projectForm, null, 2);
+    let conversationHistory = [{ role: 'user', parts: [{ text: `Here is the project brief:\n${projectBrief}` }] }];
+
+    const tasks = [
+        { agentIndex: 0, task: "Analyze the project requirements and create a project plan." },
+        { agentIndex: 1, task: "Develop a high-level architectural concept based on the plan." },
+        { agentIndex: 2, task: "Generate a descriptive prompt for a photorealistic exterior rendering." },
+        { agentIndex: 3, task: "Outline the key 2D CAD plans required." },
+        { agentIndex: 4, task: "Suggest a palette of 5 key materials." },
+        { agentIndex: 5, task: "Provide a high-level cost estimation breakdown (3-4 items)." },
+        { agentIndex: 6, task: "Identify 3 key sustainability features to integrate." },
+        { agentIndex: 7, task: "Suggest an interior design direction." },
+        { agentIndex: 0, task: "Review all outputs and provide a final summary." }
+    ];
+
+    try {
+        for (let i = 0; i < tasks.length; i++) {
+            const { agentIndex, task } = tasks[i];
+            const currentAgent = agents[agentIndex];
+
+            // Update agent status in the UI
+            agents.forEach(a => a.status = 'idle');
+            currentAgent.status = 'active';
+            currentAgent.currentTask = `Working on: ${task}`;
+            const progress = Math.round(((i + 1) / tasks.length) * 100);
+            renderAgentHuddle(agents, agentIndex, progress, `${currentAgent.name}: ${task}`);
+
+            // Construct the prompt for the current task
+            const prompt = `
+                You are the ${currentAgent.name}, whose role is: "${currentAgent.role}".
+                The overall project brief is:
+                ${projectBrief}
+
+                Your current task is: "${task}".
+
+                Based on the conversation history so far, provide a concise, one-sentence summary of your output for this task.
+                Do not repeat the prompt. Just provide your output.
+            `;
+            conversationHistory.push({ role: 'user', parts: [{ text: prompt }] });
+
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: conversationHistory })
+            });
+
+            if (!response.ok) throw new Error(`API Error: ${response.status} ${await response.text()}`);
+
+            const data = await response.json();
+            if (!data.candidates?.[0]?.content?.parts?.[0]?.text) throw new Error("Invalid API response structure");
+
+            const taskResult = data.candidates[0].content.parts[0].text;
+
+            // Add AI response to conversation history
+            conversationHistory.push({ role: 'model', parts: [{ text: taskResult }] });
+
+            // Update agent's completed task in the main data structure
+            currentAgent.currentTask = taskResult;
+            renderAgentHuddle(agents, agentIndex, progress, `${currentAgent.name}: ${taskResult.substring(0, 80)}...`);
+
+            // Give a small delay for visual effect
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+
+        completeGeneration();
+
+    } catch (error) {
+        console.error("Error during AI generation:", error);
+        showToast("An error occurred during AI generation. Check console.", "error");
+        closeModal('agent-huddle-modal');
+        appState.isGenerating = false;
+    }
 }
 
 function renderAgentHuddle(agents, activeIndex, progress, currentTask = "Initializing...") {
