@@ -808,18 +808,20 @@ function renderAgentHuddle(
   const taskText = document.getElementById('current-task-text');
 
   // Position agents in a circle
-  const centerX = 250;
-  const centerY = 250;
-  const radius = 180;
+  const centerX = 140;
+  const centerY = 140;
+  const radius = 110;
 
   agentsContainer.innerHTML = agents
     .map((agent, index) => {
       const angle = (index / agents.length) * 2 * Math.PI - Math.PI / 2;
-      const x = centerX + radius * Math.cos(angle) - 40;
-      const y = centerY + radius * Math.sin(angle) - 40;
+      const x = centerX + radius * Math.cos(angle) - 35;
+      const y = centerY + radius * Math.sin(angle) - 35;
 
       return `
-            <div class="agent-pod ${agent.status}" style="left: ${x}px; top: ${y}px;">
+            <div class="agent-pod ${
+              index === activeIndex ? 'active' : ''
+            }" style="left: ${x}px; top: ${y}px;">
                 <i class="${agent.icon}"></i>
                 <div class="agent-name">${agent.name}</div>
             </div>
