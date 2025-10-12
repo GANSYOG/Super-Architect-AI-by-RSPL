@@ -14,7 +14,51 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
-    <div id="app" class="app-container">
+    <!-- Auth Screen -->
+    <div id="auth-screen" class="auth-screen hidden">
+      <div class="auth-container">
+        <div class="auth-logo">
+          <i class="fas fa-building"></i>
+          <h1>SuperArchitect AI</h1>
+          <p>Professional Architectural Design Platform</p>
+        </div>
+
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-tab="signin">Sign In</button>
+          <button class="auth-tab" data-tab="signup">Sign Up</button>
+        </div>
+
+        <form id="signin-form" class="auth-form">
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" id="signin-email" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="signin-password" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn--primary btn--full-width">Sign In</button>
+        </form>
+
+        <form id="signup-form" class="auth-form hidden">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="signup-name" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" id="signup-email" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="signup-password" class="form-control" required minlength="6">
+          </div>
+          <button type="submit" class="btn btn--primary btn--full-width">Create Account</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="app" class="app-container hidden">
       <!-- Sidebar -->
       <aside class="sidebar">
         <!-- Navigation Section -->
@@ -25,6 +69,10 @@
           </div>
 
           <nav class="navigation">
+            <button class="nav-item" data-studio="portfolio">
+              <i class="fas fa-folder-open"></i>
+              <span>My Projects</span>
+            </button>
             <button class="nav-item active" data-studio="architecture">
               <i class="fas fa-home"></i>
               <span>Architecture Studio</span>
@@ -46,6 +94,29 @@
               <span>Agent Team Designer</span>
             </button>
           </nav>
+
+          <div class="user-profile-section">
+            <button class="user-profile-btn" id="user-profile-btn">
+              <div class="user-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="user-info">
+                <div class="user-name" id="user-name-display">Loading...</div>
+                <div class="user-role" id="user-role-display">Architect</div>
+              </div>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="user-menu hidden" id="user-menu">
+              <button class="menu-item" id="profile-settings">
+                <i class="fas fa-user-cog"></i>
+                Profile Settings
+              </button>
+              <button class="menu-item" id="sign-out-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                Sign Out
+              </button>
+            </div>
+          </div>
         </div>
 
         <!-- Contextual Panel -->
@@ -245,7 +316,6 @@
       </div>
     </div>
 
-    <script src="env.js"></script>
-    <script src="app.js"></script>
+    <script type="module" src="app-new.js"></script>
   </body>
 </html>
